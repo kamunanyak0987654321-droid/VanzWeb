@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VanzDev Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: #d0ebff;
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #3399ff;
+        color: white;
+        padding: 15px 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    header h1 { margin: 0; font-size: 22px; }
+    #menu-btn {
+        font-size: 24px;
+        cursor: pointer;
+        border: none;
+        background: none;
+        color: white;
+    }
+
+    #sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100%;
+        background-color: #3399ff;
+        color: white;
+        padding-top: 60px;
+        transition: 0.3s;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.2);
+        z-index: 10;
+    }
+    #sidebar button {
+        width: 100%;
+        padding: 15px 20px;
+        border: none;
+        background: none;
+        color: white;
+        font-size: 16px;
+        text-align: left;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        transition: 0.2s;
+    }
+    #sidebar button:hover { background-color: #2880d0; }
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 0;
+        background-color: rgba(0,0,0,0.4);
+        transition: 0.3s;
+        z-index: 5;
+    }
+
+    main { margin-left: 0; padding: 30px; transition: 0.3s; }
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .card {
+        background-color: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .card h3 { margin-top: 0; }
+
+    #chatbox {
+        height: 300px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f1f9ff;
+        margin-bottom: 10px;
+    }
+    #chat-input {
+        width: calc(100% - 100px);
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+    }
+    #send-btn {
+        padding: 10px 20px;
+        border: none;
+        background-color: #3399ff;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+    #send-btn:hover { background-color: #0073e6; }
+
+    #qr-section img {
+        width: 250px;
+        height: 500px;
+        border-radius: 12px;
+        border: 1px solid #3399ff;
+    }
+
+    form input, form button {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    form button {
+        background-color: #3399ff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+    form button:hover { background-color: #0073e6; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>VanzDev Dashboard</h1>
+    <button id="menu-btn">&#9776;</button>
+</header>
+
+<div id="sidebar">
+    <button onclick="showSection('dashboard')">Dashboard</button>
+    <button onclick="showSection('chatbot')">Chatbot Gemini</button>
+    <button onclick="showSection('qr')">QR WA</button>
+    <button onclick="showSection('apikey')">API Key Gemini</button>
+    <button onclick="showSection('about')">Tentang VanzDev</button>
+</div>
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<main>
+    <!-- Dashboard -->
+    <div class="section active" id="dashboard-section">
+        <h2>Dashboard Utama</h2>
+
+        <!-- Kotak Gambar -->
+        <div class="card" style="text-align:center;">
+            <h3>form u 2000 years ago</h3>
+            <video 
+    src="https://e.top4top.io/m_3646otyye1.mp4" 
+    style="width:100%; max-width:400px; border-radius:12px; object-fit:contain;" 
+    autoplay muted loop
+></video>
+            <p style="margin-top:10px;">Deskripsi singkat gambar</p>
+        </div>
+
+        <!-- Statistik Bot -->
+        <div class="card">
+            <h3>Statistik Bot ⚡</h3>
+            <p>→ Kecepatan jaringan: Ping 24 ms | Download 72 Mbps | Upload 32 Mbps.</p>
+            <p>→ Status Gemini: Terhubung 🟢.</p>
+            <p>→ Respon rata-rata: 0.8 detik.</p>
+        </div>
+
+        <!-- Info Cepat -->
+        <div class="card">
+            <h3>Info Cepat</h3>
+            <p>Kamu bisa memakai bot WhatsApp atau chatbot melalui menu samping.</p>
+        </div>
+
+        <!-- Tombol Musik -->
+        <div class="card" style="text-align:center;">
+            <button id="music-btn" style="padding:10px 20px; border:none; border-radius:6px; background-color:#3399ff; color:white; cursor:pointer;">
+                Play Musik
+            </button>
+        </div>
+    </div>
+
+    <!-- Chatbot Gemini -->
+    <div class="section" id="chatbot-section">
+        <h2>Chatbot Gemini</h2>
+        <div id="chatbox"></div>
+        <input type="text" id="chat-input" placeholder="Ketik pesan...">
+        <button id="send-btn">Kirim</button>
+    </div>
+
+    <!-- QR WA -->
+    <div class="section" id="qr-section">
+        <h2>QR Bot WA</h2>
+        <div class="card">
+            <p>Scan QR ini untuk menghubungkan bot:</p>
+            <img src="https://k.top4top.io/p_3646j6f4v1.jpg" alt="QR WA">
+        </div>
+    </div>
+
+    <!-- API Key Gemini -->
+    <div class="section" id="apikey-section">
+        <h2>API Key Gemini</h2>
+        <div class="card">
+            <form id="api-key-form">
+                <input type="text" id="gemini-key" placeholder="Masukkan API Key Gemini" required>
+                <button type="submit">Simpan API Key</button>
+            </form>
+            <div id="api-status"></div>
+        </div>
+    </div>
+
+    <!-- Tentang VanzDev -->
+    <div class="section" id="about-section">
+        <h2>Tentang VanzDev</h2>
+
+        <!-- Foto Bulat -->
+        <div style="text-align:center; margin-bottom:20px;">
+            <img src="https://l.top4top.io/p_3646x2dsw2.jpg" alt="Foto VanzDev"
+                 style="width:150px; height:150px; border-radius:50%; border:3px solid #3399ff; object-fit:cover;">
+        </div>
+
+        <div class="card">
+            <h3>Siapa VanzDev?</h3>
+            <p>VanzDev adalah pengembang bot WhatsApp dan sistem AI Chatbot. Dashboard ini dibuat untuk memudahkan pengelolaan bot, integrasi Gemini AI, dan memonitor aktivitas bot secara real-time.</p>
+        </div>
+        <div class="card">
+          <h3>Nomor WhatsApp VanzDev</h3>
+          <p>+62 895-3651-56485</p>
+          <p>Klik Dibawah ini juga bisa</p>
+          <a href="https://example.com" style="text-decoration:none; color:inherit;">
+  <p>wa.me/62895365156485</p>
+</a>
+          </div>
+          
+        <div class="card">
+            <h3>Fitur</h3>
+            <ul>
+                <li>Dashboard bot dengan statistik</li>
+                <li>Chatbot Gemini AI</li>
+                <li>Integrasi QR WhatsApp untuk bot</li>
+                <li>Simpan API Key Gemini untuk chatbot</li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<!-- Musik Offline -->
+<audio id="bg-music" loop>
+  <source src="https://e.top4top.io/m_3646xlt9r0.mp3" type="audio/mpeg">
+  Browser kamu tidak mendukung audio.
+</audio>
+
+<script>
+// Sidebar toggle
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+document.getElementById('menu-btn').addEventListener('click', () => {
+    sidebar.style.left = '0';
+    overlay.style.width = '100%';
+});
+function closeSidebar() {
+    sidebar.style.left = '-250px';
+    overlay.style.width = '0';
+}
+
+// Show section
+function showSection(section) {
+    const sections = ['dashboard','chatbot','qr','apikey','about'];
+    sections.forEach(sec => document.getElementById(sec+'-section').classList.remove('active'));
+    document.getElementById(section+'-section').classList.add('active');
+    closeSidebar();
+}
+
+// Simpan API Key di localStorage
+let geminiApiKey = localStorage.getItem('geminiApiKey') || '';
+if(geminiApiKey) document.getElementById('api-status').innerHTML = '<p>API Key sudah tersimpan.</p>';
+
+document.getElementById('api-key-form').addEventListener('submit', e => {
+    e.preventDefault();
+    geminiApiKey = document.getElementById('gemini-key').value.trim();
+    if(!geminiApiKey) return;
+    localStorage.setItem('geminiApiKey', geminiApiKey);
+    document.getElementById('api-status').innerHTML = '<p>API Key Gemini berhasil disimpan!</p>';
+    document.getElementById('gemini-key').value = '';
+});
+
+// Chatbot Gemini
+document.getElementById('send-btn').addEventListener('click', async () => {
+    const input = document.getElementById('chat-input');
+    const chatbox = document.getElementById('chatbox');
+    if(input.value.trim() === '') return;
+
+    chatbox.innerHTML += `<p><strong>Kamu:</strong> ${input.value}</p>`;
+    const userMessage = input.value;
+
+    if(!geminiApiKey) {
+        chatbox.innerHTML += `<p><strong>Gemini:</strong> API Key belum disimpan!</p>`;
+        input.value = '';
+        return;
+    }
+
+    try {
+        const response = await fetch('https://api.gemini.ai/respond', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${geminiApiKey}`
+            },
+            body: JSON.stringify({ message: userMessage })
+        });
+        const data = await response.json();
+        const botReply = data.reply || 'Balasan dari Gemini tidak tersedia.';
+        chatbox.innerHTML += `<p><strong>Gemini:</strong> ${botReply}</p>`;
+    } catch(err) {
+        chatbox.innerHTML += `<p><strong>Gemini:</strong> Error: Tidak bisa terhubung ke API</p>`;
+    }
+
+    input.value = '';
+    chatbox.scrollTop = chatbox.scrollHeight;
+});
+
+// Tombol Play/Pause Musik Offline
+const music = document.getElementById('bg-music');
+const musicBtn = document.getElementById('music-btn');
+
+musicBtn.addEventListener('click', () => {
+    if(music.paused){
+        music.play();
+        musicBtn.textContent = 'Pause Musik';
+    } else {
+        music.pause();
+        musicBtn.textContent = 'Play Musik';
+    }
+});
+</script>
+
+</body>
+</html>
